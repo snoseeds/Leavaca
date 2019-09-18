@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="assets/stylesheets/main.css">
+	<script src="assets/scripts/main.js"></script>
+	<script src="assets/scripts/app.js"></script>
+	<title>Leavaca | IT Admin Account Success</title>
+</head>
+
+<body class="protected confirmation-box">
+	<div class="container">
+		<header class="main-header">
+			<h1 id="heading">Leave WebApp</h1>
+			<ul>
+				<li>
+					<a href="index.html" class="main-logo">
+						<img src="assets/images/lms-logo.jpg" alt="leavaca_logo">
+					</a>
+				</li>
+				<li>
+					<div class="date"></div>
+				</li>
+				<li class="log-out">
+					<a data-question="Are you sure you want to log out?" data-url="staffAndAdminMainPage.html?log_out" data-url-title="Log Out" class="action" href="#tail">Log Out</a>
+				</li>
+			</ul>
+		</header>
+		<section class="confirmation">
+			<p></p>
+			<div>
+				<a class="btn btn-default do-action" href=""></a>
+				<a class="btn btn-default stop-action" href="#heading">No</a>
+			</div>
+		</section>
+		<aside id="side" class="main-sidebar">
+		  <ul>
+		  	<li>
+		  		<a class="active" href="#home">Home</a>
+		  	</li>
+		  	<li>
+		  		<a href="#news">News</a>
+		  	</li>
+		    <li>
+		    	<a href="#contact">Contact</a>
+		    </li>
+		  	<li>
+		  		<a href="#about">About</a>
+		  	</li>
+		  </ul>
+		</aside>
+		<section id="main" class="main-body">
+			<div class="menu">
+				<button id="menuB" onclick="event.stopPropagation()">&#8801</button>
+			</div>
+			<header class="intro">
+				<h3>You have successfully created an account and logged in as the IT Admin at Leavaca!</h3>
+			</header>
+			<section>
+				<p>Check your email to confirm your details and you can go to your portal below. Thanks!</p>
+			</section>
+			<section class="sign-in">
+				<a href="admin_portal.html?rootAdmin" class="btn btn-default">Go to Portal</a>
+			</section>
+			<div id="transOverlay"></div>
+		</section>
+
+		<footer class="main-footer">
+			<nav class="footer-nav">
+				<ul>
+					<li>
+						<a href="">Security</a>
+					</li>
+					<li>
+						<a href="">Accessibility</a>
+					</li>
+					<li>
+						<a href="">Terms and Conditions</a>
+					</li>
+				</ul>
+			</nav>
+			
+		</footer>
+
+	</div>
+</body>
+
+</html>
+                                    

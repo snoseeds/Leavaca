@@ -1,0 +1,31 @@
+{
+  "employee": [
+    {
+      "firstName": "Whitney",
+      "lastName": "Taire",
+      "email": "whitney.t@tranos.ng",
+      "password": "adminwaniye",
+      "employeeType": "rootAdmin",
+      "token": "whitney.trootAdmintranos.ng",
+      "id": 1
+    },
+    {
+      "firstName": "Joshua",
+      "lastName": "Kuti",
+      "email": "kutjosh@gmail.com",
+      "password": "orewanio",
+      "employeeType": "employee",
+      "token": "kutjoshemployeegmail.com",
+      "id": 2
+    },
+    {
+      "firstName": "Jude",
+      "lastName": "Abalaka",
+      "email": "jude.a@tranos.ng",
+      "password": "oganiyen",
+      "employeeType": "manager",
+      "token": "jude.amanagertranos.ng",
+      "id": 3
+    }
+  ]
+}
