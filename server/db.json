@@ -43,10 +43,22 @@
       "employeeType": "manager",
       "token": "emeke.emanagertranos.ng",
       "id": 4
+    },
+    {
+      "firstName": "Nurudeen",
+      "lastName": "Soremekun",
+      "email": "nurudeen.soremekun@gmail.com",
+      "password": "awaniyeno",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
+      "employeeType": "employee",
+      "token": "nurudeen.soremekunemployeegmail.com",
+      "id": 5
     }
   ],
   "leave": [
     {
+      "requesterName": "Joshua Kuti",
       "requesterEmail": "kutjosh@gmail.com",
       "requesterComment": "Please free your boy boss",
       "createdDate": "Sep 18 2019",
@@ -63,6 +75,7 @@
       "editedDate": "Sep 19 2019"
     },
     {
+      "requesterName": "Joshua Kuti",
       "requesterEmail": "kutjosh@gmail.com",
       "requesterComment": "",
       "createdDate": "Sep 19 2019",
@@ -76,6 +89,40 @@
         "comment": "No comments yet"
       },
       "id": 4
+    },
+    {
+      "requesterName": "Nurudeen Soremekun",
+      "requesterEmail": "nurudeen.soremekun@gmail.com",
+      "requesterComment": "End of Ramadan Fasting Festivity",
+      "createdDate": "Sep 19 2019",
+      "editedDate": "Sep 19 2019",
+      "startDate": "2019-10-14",
+      "endDate": "2019-10-18",
+      "noOfWorkingDays": "5",
+      "status": "pending",
+      "reviewManagerObject": {
+        "name": "Emeke Edike",
+        "email": "emeke.e@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 5
+    },
+    {
+      "requesterName": "Nurudeen Soremekun",
+      "requesterEmail": "nurudeen.soremekun@gmail.com",
+      "requesterComment": "All work and no play isn't good",
+      "createdDate": "Sep 19 2019",
+      "editedDate": "Sep 19 2019",
+      "startDate": "2019-12-23",
+      "endDate": "2019-12-24",
+      "noOfWorkingDays": "2",
+      "status": "pending",
+      "reviewManagerObject": {
+        "name": "Jude Abalaka",
+        "email": "jude.a@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 6
     }
   ]
 }

@@ -289,38 +289,38 @@ const start = () => {
             .sessionStorage.remainingLeaveDays} official days`;
         };
 
-        const populateManagersField = () => {
-          const reviewManager = document.querySelector('#reviewManager');
-          fetch(`${leavacaAPIsHost}/employee?employeeType=manager`)
+        const populateEmployeeType = (selectElementQuery, table, arrOfQueryNamesAndValues, employeeType) => {
+          const employeeTypeSelectElement = document.querySelector(`${selectElementQuery}`);
+          fetch(`${leavacaAPIsHost}/${table}?${arrOfQueryNamesAndValues.join('&')}`)
             .then(async (resp) => {
               if (resp.ok) {
                 const parsedResponse = await resp.json();
                 console.log(parsedResponse);
                 if (parsedResponse.length > 0) {
-                  parsedResponse.forEach((managerEmployeeObj) => {
-                  reviewManager.innerHTML += `
-                    <option value=${managerEmployeeObj.email} name="${managerEmployeeObj.firstName} ${managerEmployeeObj.lastName}">
-                      ${managerEmployeeObj.firstName} ${managerEmployeeObj.lastName}
+                  parsedResponse.forEach((employeeTypeRecdObj) => {
+                  employeeTypeSelectElement.innerHTML += `
+                    <option value="${employeeTypeRecdObj.requesterEmail ||  employeeTypeRecdObj.email}" name="${employeeTypeRecdObj.requesterName || employeeTypeRecdObj.firstName.concat(' ').concat(employeeTypeRecdObj.lastName)}">
+                      ${employeeTypeRecdObj.requesterName || employeeTypeRecdObj.firstName.concat(' ').concat(employeeTypeRecdObj.lastName)}
                     </option>`
                   })
                 } else {
-                  reviewManager.innerHTML += `
+                  employeeTypeSelectElement.innerHTML += `
                     <option value="0">
-                      No managers yet
+                      No ${employeeType}s yet
                     </option>`
                 }
               } else {
-                reviewManager.innerHTML += `
+                employeeTypeSelectElement.innerHTML += `
                   <option value="0">
-                    Error getting managers
+                    Error getting ${employeeType}s
                   </option>`
               }
             })
             .catch((error) => {
               console.log(error);
-              reviewManager.innerHTML += `
+              employeeTypeSelectElement.innerHTML += `
                 <option value="0">
-                  Error getting managers
+                  Error getting ${employeeType}s
                 </option>`                
             })
         };
@@ -390,13 +390,18 @@ const start = () => {
               i = 0;
             }
           };
+          leaveForm.dateFrom.addEventListener('change', () => {
+            if (leaveForm.dateTo.value) countDays(leaveForm);
+            console.log('yes');
+            console.log('leaveForm.dateTo.value');
+          });
           leaveForm.dateTo.addEventListener('change', () => countDays(leaveForm));
         };
 
         const handleLeaveCreationForm = () => {
           mindLeaveDays();
           const leaveCreationForm = document.querySelector('#leaveCreationForm');
-          populateManagersField();
+          populateEmployeeType('#reviewManager', 'employee', ['employeeType=manager'], 'manager');
           validateAndGetOfficialDays();
           const createLeaveRequestBtn = leaveCreationForm.querySelector('#createLeaveRequestBtn');
           const reviewManager = leaveCreationForm.querySelector('#reviewManager');
@@ -415,6 +420,7 @@ const start = () => {
             let [ notOfInterest, ...interestedDateInfo ] = new Date().toDateString().split(' ');
             interestedDateInfo = interestedDateInfo.join(' ');
             const leaveRequestFormPayloads = {
+              requesterName: `${window.sessionStorage.firstName} ${window.sessionStorage.lastName}`,
               requesterEmail: window.sessionStorage.email,
               requesterComment: leaveCreationForm.querySelector('#requesterComment').value,
               createdDate: interestedDateInfo,
@@ -518,7 +524,7 @@ const start = () => {
               console.log(error);
               showLeaveEditionError();
             })
-          populateManagersField();
+          populateEmployeeType('#reviewManager', 'employee', ['employeeType=manager'], 'manager');
           validateAndGetOfficialDays();
           const leaveEditionForm = document.querySelector('#leaveEditionForm');
           const editLeaveRequestBtn = leaveEditionForm.querySelector('#editLeaveRequestBtn');
@@ -590,27 +596,28 @@ const start = () => {
 
         const handleRequestsClicks = () => {
           function setLeavePageQueryId () {
-            console.log('imagine');
             window.sessionStorage.selectedLeaveId = this.textContent;
             setLocation('leave_details');
           }
-          const leaveRequestElements = document.querySelectorAll('.leave-id p');
+          const leaveRequestElements = document.querySelectorAll('.leave-id-no p');
           leaveRequestElements.forEach(leaveIdLinkElement => {
             console.log('ok');
             leaveIdLinkElement.addEventListener('click', setLeavePageQueryId);
           });
         };
 
-        const renderLeaveReqsTable = (queryType, queryValue) => {
-          const leaveRequestsTableBody = document.querySelector('.leave-requests-table table tbody');
+        const renderLeaveReqsTable = (arrOfQueryNamesAndValues, tableCategory) => {
+          const leaveRequestsTableBody = document.querySelector(`.leave-requests-table table.${tableCategory} tbody`)
+            || document.querySelector('.leave-requests-table table tbody');
           const showLeaveReqsDisplayError = (errorInfo) => {
-            const displaySection = document.querySelector('.leave-request-creation');
+            const displaySection = document.querySelector(`table.${tableCategory} + .leave-request-creation`)
+              || document.querySelector('.leave-request-creation');
             const p = document.createElement('p');
             p.style.color = 'red';
             p.textContent = errorInfo;
             displaySection.insertBefore(p, displaySection.firstElementChild);
           };
-          fetch(`${leavacaAPIsHost}/leave?${queryType}=${queryValue}`)
+          fetch(`${leavacaAPIsHost}/leave?${arrOfQueryNamesAndValues.join('&')}`)
             .then(async (resp) => {
               if (resp.ok) {
                 const parsedResponse = await resp.json();
@@ -618,17 +625,22 @@ const start = () => {
                 if (parsedResponse.length > 0) {
                   parsedResponse.forEach((leaveRequestObject) => {
                   leaveRequestsTableBody.innerHTML += `
-                    <tr class="accounts-table-row">
-                      <td class="acct-name leave-id">
+                    <tr class="accounts-table-row"
+                      data-email="${leaveRequestObject.requesterEmail}"
+                      data-leave-req-id="${leaveRequestObject.id}">
+                      <td class="acct-name requester-name">
+                        <p>${leaveRequestObject.requesterName}</p>
+                      </td>
+                      <td class="acct-number leave-id-no">
                         <p>${leaveRequestObject.id}</p>
                       </td>
                       <td class="account-type date-requested">
                         <p>${leaveRequestObject.createdDate}</p>
                       </td>
-                      <td class="acct-number start-date">
+                      <td class="start-date">
                         <p>${leaveRequestObject.startDate}</p>
                       </td>
-                      <td class="balance end-date">
+                      <td class="end-date">
                         <p>${leaveRequestObject.endDate}</p>
                       </td>
                       <td class="available-balance no-of-leave-official-days">
@@ -641,7 +653,7 @@ const start = () => {
                           <td>
                             Your Comments
                           </td>
-                          <td colspan="4">
+                          <td colspan="5">
                             ${leaveRequestObject.requesterComment}
                           </td>
                         </tr>
@@ -651,6 +663,8 @@ const start = () => {
                           </td>
                           <td colspan="2">
                             ${leaveRequestObject.reviewManagerObject.name}
+                          </td>
+                          <td>
                           </td>
                           <td>
                             Status
@@ -663,7 +677,7 @@ const start = () => {
                           <td>
                             Review Comments
                           </td>
-                          <td colspan="4">
+                          <td colspan="5">
                             ${leaveRequestObject.reviewManagerObject.comment}
                           </td>
                         </tr>`;
@@ -673,21 +687,31 @@ const start = () => {
                 } else {
                   showLeaveReqsDisplayError('You do not have any leave request');
                 }
-                leaveRequestsTableBody.innerHTML += `
-                  <tr class="requests-total accounts-table-row total">
-                    <td>
-                      Annual Leave Days
-                    </td>
-                    <td>
-                      ${window.sessionStorage.leaveDays}
-                    </td>
-                    <td colspan="2">
-                      Remaining Leave Days
-                    </td>
-                    <td>
-                      ${window.sessionStorage.remainingLeaveDays}
-                    </td>
-                  </tr>`;
+                if (presentPageBody.classList.contains('manager-portal')
+                  || presentPageBody.classList.contains('admin-eagle-view-portal')) {
+                  leaveRequestsTableBody.innerHTML += `
+                    <td colspan="6">
+                      <a id="#top" class="">Back to Top&#x25B2;</a>
+                    </td>`;
+                } else {
+                  leaveRequestsTableBody.innerHTML += `
+                    <tr class="requests-total accounts-table-row total">
+                      <td>
+                        Annual Leave Days
+                      </td>
+                      <td>
+                        ${window.sessionStorage.leaveDays}
+                      </td>
+                      <td>
+                      </td>
+                      <td colspan="2">
+                        Remaining Leave Days
+                      </td>
+                      <td>
+                        ${window.sessionStorage.remainingLeaveDays}
+                      </td>
+                    </tr>`;
+                }
               } else {
                 showLeaveReqsDisplayError('Ooops, there\'s an error getting leave requests, Kindly reload the page!');
               }
@@ -697,6 +721,9 @@ const start = () => {
 
         const renderEmployeeDashboard = async () => {
           showDateToday();
+          if (window.sessionStorage.employeeType === 'manager') {
+            document.querySelector('#managerPortal').classList.remove('hide');
+          }
           if (window.location.href.includes('deleteSelectedReq')) {
             const deleteLeaveRequestAPI = `${leavacaAPIsHost}/leave/${window.sessionStorage.selectedLeaveId}`;
             await fetch(deleteLeaveRequestAPI, {
@@ -722,8 +749,104 @@ const start = () => {
                   Kindly try again later</p>`;
               });
           }
-          renderLeaveReqsTable('email', window.sessionStorage.email);
+          renderLeaveReqsTable([`requesterEmail=${window.sessionStorage.email}`]);
         };
+
+
+        const browseEmployeesAndLeave = (leaveCatergoryInUpperScope, selectElementIdInUpperScope) => {
+          const configuredCategory = () => {
+            const leaveCategory = leaveCatergoryInUpperScope;
+            const selectElementId = selectElementIdInUpperScope;
+            const takeLeaveRequestToTop = (leaveRequestRow) => {
+              const tableBodyOfAllEmployeesLeave = document.querySelector(`.leave-requests-table table.${leaveCategory} tbody`);
+              tableBodyOfAllEmployeesLeave.prepend(tableBodyOfAllEmployeesLeave.removeChild(leaveRequestRow));
+            };
+            function moveSelEmpLeavesToTop() {
+              const selectedEmployeeLeaves = document.querySelectorAll(`table.${leaveCategory} tr[data-email='${this
+                .options[this.selectedIndex].value}']`);
+              if (selectedEmployeeLeaves) {
+                selectedEmployeeLeaves.forEach((leaveRequest, i) => {
+                  takeLeaveRequestToTop(selectedEmployeeLeaves[i]);
+                });
+              }
+            }
+            function moveInputtedLeaveIdToTop() {
+              const inputtedLeaveId = document.querySelector(`table.${leaveCategory} tr[data-leave-req-id^='${this.value}']`);
+              takeLeaveRequestToTop(inputtedLeaveId);
+            }
+            const searchEmployeesNamesByEmail = () => {
+              const emailInput = document.querySelector(`form.${leaveCategory} #email`);
+              function setMatchedOptionToSelected() {
+                const matchedOption = document.querySelector(`form.${leaveCategory} option[value^='${this.value}']`);
+                matchedOption.selected = 'selected';
+                moveSelEmpLeavesToTop.call(document.querySelector(`form.${leaveCategory} #${selectElementId}`));
+              }
+              emailInput.addEventListener('keyup', setMatchedOptionToSelected);
+            };
+            const searchLeaveReqsBySelectedEmp = () => {
+              const selectEmployee = document.querySelector(`form.${leaveCategory} #${selectElementId}`);
+              selectEmployee.addEventListener('change', moveSelEmpLeavesToTop);
+            };
+            const searchLeaveReqsByLeaveId = () => {
+              const leaveIdInput = document.querySelector(`form.${leaveCategory} #leaveId`);
+              leaveIdInput.addEventListener('keyup', moveInputtedLeaveIdToTop);
+            };
+            searchEmployeesNamesByEmail();
+            searchLeaveReqsBySelectedEmp();
+            searchLeaveReqsByLeaveId();
+          }
+          return configuredCategory;
+        };
+
+        const renderManagerDashboard = () => {
+          showDateToday();
+          populateEmployeeType('form.pending #employeesThatChoseManager', 'leave', [`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=pending'], 'employee');
+          renderLeaveReqsTable([`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=pending'], 'pending');
+          const configureSearchForPendingLeave = browseEmployeesAndLeave('pending', 'employeesThatChoseManager');
+          configureSearchForPendingLeave();
+          populateEmployeeType('form.approved #employeesThatChoseManager', 'leave', [`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=approved'], 'employee');
+          renderLeaveReqsTable([`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=approved'], 'approved');
+          const configureSearchForApprovedLeave = browseEmployeesAndLeave('approved', 'employeesThatChoseManager');
+          configureSearchForApprovedLeave();
+          populateEmployeeType('form.disapproved #employeesThatChoseManager', 'leave', [`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=disapproved'], 'employee');
+          renderLeaveReqsTable([`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=disapproved'], 'disapproved');
+          const configureSearchForDisapprovedLeave = browseEmployeesAndLeave('disapproved', 'employeesThatChoseManager');
+          configureSearchForDisapprovedLeave();
+        };
+
+        if (presentPageBody.classList.contains('manager-portal')) {
+          renderManagerDashboard();
+        }
+
+        const renderAdminEagleView = () => {
+          showDateToday();
+          const searchEmployeesNamesByEmail = (listCategory) => {
+            const emailInput = document.querySelector(`form.${listCategory} #email`);
+            function setMatchedOptionToSelected() {
+              const matchedOption = document.querySelector(`form.${listCategory} option[value^='${this.value}']`);
+              matchedOption.selected = 'selected';
+            }
+            emailInput.addEventListener('keyup', setMatchedOptionToSelected);
+          };
+          searchEmployeesNamesByEmail('all-added-users');
+          populateEmployeeType('#all-added-users', 'employee', ['1=1'], 'employee');
+          populateEmployeeType('form.pending #pending', 'leave', ['status=pending'], 'employee');
+          renderLeaveReqsTable(['status=pending'], 'pending');
+          const configureSearchForPendingLeave = browseEmployeesAndLeave('pending', 'pending');
+          configureSearchForPendingLeave();
+          populateEmployeeType('form.approved #approved', 'leave', ['status=approved'], 'employee');
+          renderLeaveReqsTable(['status=approved'], 'approved');
+          const configureSearchForApprovedLeave = browseEmployeesAndLeave('approved', 'approved');
+          configureSearchForApprovedLeave();
+          populateEmployeeType('form.disapproved #disapproved', 'leave', ['status=disapproved'], 'employee');
+          renderLeaveReqsTable(['status=disapproved'], 'disapproved');
+          const configureSearchForDisapprovedLeave = browseEmployeesAndLeave('disapproved', 'disapproved');
+          configureSearchForDisapprovedLeave();
+        };
+
+        if (presentPageBody.classList.contains('admin-eagle-view-portal')) {
+          renderAdminEagleView();
+        }
 
         if (presentPageBody.classList.contains('staff-portal')) {
           renderEmployeeDashboard();
@@ -735,7 +858,7 @@ const start = () => {
             document.querySelector('.request-info p')
               .textContent = 'Kindly see details of the updated leave request below';
           }
-          renderLeaveReqsTable('id', window.sessionStorage.selectedLeaveId);
+          renderLeaveReqsTable([`id=${window.sessionStorage.selectedLeaveId}`]);
         };  
 
         if (presentPageBody.classList.contains('leave-details')) {

@@ -705,11 +705,11 @@ td, th {
 }
 
 p.account-name a,
-.leave-id p {
+.leave-id-no p {
   text-decoration: underline;
 }
 
-.leave-id p {
+.leave-id-no p {
   cursor: pointer;
 }
 
@@ -1286,3 +1286,16 @@ td.transaction-diff {
 .admin-user-ops * {
   border: 1px solid black;
 }*/
+
+.admin-eagle-view-portal .main-body > section.pending,
+.admin-eagle-view-portal .main-body > section.approved,
+.admin-eagle-view-portal .main-body > section.disapproved,
+.manager-portal .main-body > section.pending,
+.manager-portal .main-body > section.approved,
+.manager-portal .main-body > section.disapproved {
+  /*padding-bottom: 10px;*/
+  /*margin-bottom: 10px;*/
+  padding-top: 10px;
+  margin-top: 20px;
+  border-top: 1px solid green;
+}
