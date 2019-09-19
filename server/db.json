@@ -64,36 +64,6 @@
     },
     {
       "requesterEmail": "kutjosh@gmail.com",
-      "requesterComment": "Naming ceremony preparation",
-      "createdDate": "Sep 18 2019",
-      "startDate": "2019-09-30",
-      "endDate": "2019-10-04",
-      "noOfWorkingDays": "5",
-      "status": "pending",
-      "reviewManagerObject": {
-        "name": "Emeke Edike",
-        "email": "emeke.e@tranos.ng",
-        "comment": "No comments yet"
-      },
-      "id": 2
-    },
-    {
-      "requesterEmail": "kutjosh@gmail.com",
-      "requesterComment": "Festivity",
-      "createdDate": "Sep 18 2019",
-      "startDate": "2019-11-11",
-      "endDate": "2019-11-15",
-      "noOfWorkingDays": "5",
-      "status": "pending",
-      "reviewManagerObject": {
-        "name": "Emeke Edike",
-        "email": "emeke.e@tranos.ng",
-        "comment": "No comments yet"
-      },
-      "id": 3
-    },
-    {
-      "requesterEmail": "kutjosh@gmail.com",
       "requesterComment": "",
       "createdDate": "Sep 19 2019",
       "startDate": "2019-10-07",

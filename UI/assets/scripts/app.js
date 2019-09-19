@@ -695,8 +695,33 @@ const start = () => {
             .catch(err => console.log(err));
         };
 
-        const renderEmployeeDashboard = () => {
+        const renderEmployeeDashboard = async () => {
           showDateToday();
+          if (window.location.href.includes('deleteSelectedReq')) {
+            const deleteLeaveRequestAPI = `${leavacaAPIsHost}/leave/${window.sessionStorage.selectedLeaveId}`;
+            await fetch(deleteLeaveRequestAPI, {
+              method: 'DELETE',
+              headers: {
+                'Content-type': 'application/json',
+              }
+            })
+              .then(async (resp) => {
+                if (resp.ok) {
+                  document.querySelector('header.portal-intro').innerHTML = `
+                    <p>Successfully deleted leave request with id: ${window.sessionStorage.selectedLeaveId}
+                    Kindly see your remaining leave requests below if any</p>`;
+                } else {
+                  const error = await resp.json();
+                  throw error;
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                document.querySelector('header.portal-intro').innerHTML = `
+                  <p>There is an error deleting the leave request with id: ${window.sessionStorage.selectedLeaveId}.
+                  Kindly try again later</p>`;
+              });
+          }
           renderLeaveReqsTable('email', window.sessionStorage.email);
         };
 
