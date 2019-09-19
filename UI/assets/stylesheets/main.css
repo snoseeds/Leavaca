@@ -705,8 +705,12 @@ td, th {
 }
 
 p.account-name a,
-.acct-number a {
-  text-decoration: underline;;
+.leave-id p {
+  text-decoration: underline;
+}
+
+.leave-id p {
+  cursor: pointer;
 }
 
 p.account-type {
@@ -1051,7 +1055,9 @@ td.transaction-diff {
   }
 
   .form-div {
-    display: flex;
+    /*display: flex;*/
+    display: inline-block;
+    /*flex-wrap: nowrap;*/
 
   }
 

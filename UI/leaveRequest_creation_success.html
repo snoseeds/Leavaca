@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="assets/stylesheets/main.css">
 	<script src="assets/scripts/main.js"></script>
 	<script src="assets/scripts/app.js"></script>
-	<title>Leavaca | Staff Welcome</title>
+	<title>Leavaca | Leave Request Success</title>
 </head>
 
-<body class="protected accordion-page confirmation-box root-admin-and-admin staff-portal portal">
+<body class="protected accordion-page confirmation-box root-admin-and-admin portal">
 	<div class="container">
 		<header class="main-header portal-header">
 			<h1 id="heading">Leavaca WebApp</h1>
@@ -59,49 +59,24 @@
 		    </div>
 		  </ul>
 		</aside>
-		<section id="main" class="main-body user-portal">
+		<section id="main" class="main-body success-pages">
 			<div class="menu">
 				<button id="menuB" onclick="event.stopPropagation()">&#8801</button>
 			</div>
-			<section class="portal-intro menu-item-title">
-			</section>
-			<header class="portal-intro intro">
+			<header class="intro">
 			</header>
-			<section class="balance-info">
-				<p>Endeavor to make leave requests a week ahead of the desired start date unless for emergency cases.
-				Your approval stands an higher approval probability that way. Thanks for your understanding!</p>
+			<section>
+				<p>You have successfully created a new leave request on Leavaca!</p>
 			</section>
-			<section class="leave-requests-table accounts-table history-table">
-				<table>
-          <thead>
-            <tr class="accounts-table-row">
-              <th>
-                Leave ID
-              </th>
-              <th>
-                Requested Date
-              </th>
-              <th>
-                Start Date
-              </th>
-              <th>
-                End Date
-              </th>              
-              <th>
-                Official Days in Leave
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-				<section class="account-creation leave-request-creation">
-          <br>
-					<button data-question="Are you sure you want to add a new leave request?" data-url="leave_request_creation.html" data-url-title="Add Leave Request" class="btn btn-default action">Add Leave Request</button>
-				</section>
+			<section>
+				<p>You can go back to your dashboard now to see and track the progress of the newly included leave request. Thanks!</p>
 			</section>
-			<div id="transOverlay"></div>
+			<section class="sign-in">
+				<a href="staff_portal.html" class="btn btn-default">Go to Portal</a>
+			</section>
+      <div id="transOverlay"></div>
 		</section>
+
 		<footer id="tail" class="main-footer">
 			<nav class="footer-nav">
 				<ul>
@@ -123,3 +98,4 @@
 </body>
 
 </html>
+                                    

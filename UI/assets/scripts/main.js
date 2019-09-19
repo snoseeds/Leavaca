@@ -41,9 +41,13 @@ const startApp = () => {
           expected: () => /^[1-8]$/,
           failureResponse: 'must be a valid identification card type',
         },
-        acctType: {
-          expected: () => /^(savings)|(current)$/,
-          failureResponse: 'must be either savings or current',
+        reviewManagerType: {
+          expected: () => /([A-z0-9.-_]+)@([A-z]+)\.([A-z]){2,5}$/,
+          failureResponse: 'must be filled with a manager',
+        },
+        leaveDays: {
+          expected: () => /^[0-9]{2}$/,
+          failureResponse: 'must contain two digits',
         },
         libraryValidation: {
           expected: () => /^.{8,100}$/,
@@ -67,19 +71,20 @@ const startApp = () => {
       }
 
       // const fieldsToBeValidated = document.querySelectorAll('.create-account label input');
-      const fieldsToBeValidated = document.querySelectorAll('input:not([type="month"]), select');
+      const fieldsToBeValidated = document.querySelectorAll('input:not([class*="optional"]), select:not([class*="optional"])');
       fieldsToBeValidated.forEach((element) => {
         const elementToDisplayError = document.createElement('p');
         elementToDisplayError.classList.add('error');
         element.parentNode.parentNode.insertBefore(elementToDisplayError, element.parentNode);
         element.addEventListener('keyup', validate, false);
         element.addEventListener('change', validate, false);
+        element.addEventListener('blur', validate, false);
       });
     };
 
     if (presentPageBody.classList.contains('createAcct')
       || presentPageBody.classList.contains('slidingFormPage')
-      || presentPageBody.classList.contains('create-bank-acct')) {
+      || presentPageBody.classList.contains('leave-request-creation')) {
       validateFormFields();
     }
 

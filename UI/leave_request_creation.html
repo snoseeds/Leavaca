@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="assets/stylesheets/main.css">
 	<script src="assets/scripts/main.js"></script>
 	<script src="assets/scripts/app.js"></script>
-	<title>Leavaca | Staff Welcome</title>
+	<title>Leavaca | Admin Welcome</title>
 </head>
 
-<body class="protected accordion-page confirmation-box root-admin-and-admin staff-portal portal">
+<body class="protected accordion-page confirmation-box root-admin-and-admin portal leave-request-creation">
 	<div class="container">
 		<header class="main-header portal-header">
 			<h1 id="heading">Leavaca WebApp</h1>
@@ -59,49 +59,56 @@
 		    </div>
 		  </ul>
 		</aside>
-		<section id="main" class="main-body user-portal">
+		<section id="main" class="main-body form-page-main-body">
 			<div class="menu">
 				<button id="menuB" onclick="event.stopPropagation()">&#8801</button>
 			</div>
-			<section class="portal-intro menu-item-title">
-			</section>
-			<header class="portal-intro intro">
+			<header class="intro">
+				<h3>Create a leave request in few steps</h3>
 			</header>
-			<section class="balance-info">
-				<p>Endeavor to make leave requests a week ahead of the desired start date unless for emergency cases.
-				Your approval stands an higher approval probability that way. Thanks for your understanding!</p>
+			<p class="remaining-days-reminder"></p>
+			<section class="sign-up-form sign-up"><!--
+
+        Leave Creation form
+
+    --><form class="" id="leaveCreationForm" action="leaveRequest_creation_success.html" method="post">
+
+          <fieldset class="create-account flex-label">
+            <label>
+              Comments (optional)
+              <input class="optional" type="text" id="requesterComment" placeholder="Comments for leave reason" maxlength="150">
+            </label>
+
+          	<label class="control-label">
+              Assign Review Manager
+              <select data-val-type="reviewManagerType" id="reviewManager" class="form-control">
+								<option value="0">-- Assign Review Manager --</option>
+							</select>
+            </label>
+
+			      <label class="control-label">Start date
+			        <input type="date" id="dateStart" class="optional form-control" required pattern="[0-9]{2}-[0-9]{4}-[0-9]{2}">
+						</label>
+
+			      <label class="control-label">End date
+			        <input type="date" id="dateEnd" class="optional form-control" required pattern="[0-9]{2}-[0-9]{4}-[0-9]{2}">
+						</label>
+
+			      <label class="control-label">Calculated Working Days
+			        <input disabled type="number" id="noOfWorkingDays" class="optional form-control" required placeholder="0">
+						</label>
+
+					</fieldset>
+
+					<div>
+						<button id="createLeaveRequestBtn" class="btn btn-default formActionBtn">Create your Leave Request</button>
+					</div>
+
+        </form>
 			</section>
-			<section class="leave-requests-table accounts-table history-table">
-				<table>
-          <thead>
-            <tr class="accounts-table-row">
-              <th>
-                Leave ID
-              </th>
-              <th>
-                Requested Date
-              </th>
-              <th>
-                Start Date
-              </th>
-              <th>
-                End Date
-              </th>              
-              <th>
-                Official Days in Leave
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-				<section class="account-creation leave-request-creation">
-          <br>
-					<button data-question="Are you sure you want to add a new leave request?" data-url="leave_request_creation.html" data-url-title="Add Leave Request" class="btn btn-default action">Add Leave Request</button>
-				</section>
-			</section>
-			<div id="transOverlay"></div>
+      <div id="transOverlay"></div>
 		</section>
+
 		<footer id="tail" class="main-footer">
 			<nav class="footer-nav">
 				<ul>
@@ -123,3 +130,4 @@
 </body>
 
 </html>
+                                    
