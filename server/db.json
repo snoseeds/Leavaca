@@ -1,10 +1,12 @@
 {
   "employee": [
     {
-      "firstName": "Whitney",
-      "lastName": "Taire",
+      "firstName": "Taire",
+      "lastName": "Whitney",
       "email": "whitney.t@tranos.ng",
       "password": "adminwaniye",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
       "employeeType": "rootAdmin",
       "token": "whitney.trootAdmintranos.ng",
       "id": 1
@@ -14,6 +16,8 @@
       "lastName": "Kuti",
       "email": "kutjosh@gmail.com",
       "password": "orewanio",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
       "employeeType": "employee",
       "token": "kutjoshemployeegmail.com",
       "id": 2
@@ -23,9 +27,84 @@
       "lastName": "Abalaka",
       "email": "jude.a@tranos.ng",
       "password": "oganiyen",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
       "employeeType": "manager",
       "token": "jude.amanagertranos.ng",
       "id": 3
+    },
+    {
+      "firstName": "Emeke",
+      "lastName": "Edike",
+      "email": "emeke.e@tranos.ng",
+      "password": "supervisorwa",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
+      "employeeType": "manager",
+      "token": "emeke.emanagertranos.ng",
+      "id": 4
+    }
+  ],
+  "leave": [
+    {
+      "requesterEmail": "kutjosh@gmail.com",
+      "requesterComment": "Please free your boy boss",
+      "createdDate": "Sep 18 2019",
+      "startDate": "2019-09-23",
+      "endDate": "2019-09-27",
+      "noOfWorkingDays": "5",
+      "status": "pending",
+      "reviewManagerObject": {
+        "name": "Jude Abalaka",
+        "email": "jude.a@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 1
+    },
+    {
+      "requesterEmail": "kutjosh@gmail.com",
+      "requesterComment": "Naming ceremony preparation",
+      "createdDate": "Sep 18 2019",
+      "startDate": "2019-09-30",
+      "endDate": "2019-10-04",
+      "noOfWorkingDays": "5",
+      "status": "pending",
+      "reviewManagerObject": {
+        "name": "Emeke Edike",
+        "email": "emeke.e@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 2
+    },
+    {
+      "requesterEmail": "kutjosh@gmail.com",
+      "requesterComment": "Festivity",
+      "createdDate": "Sep 18 2019",
+      "startDate": "2019-11-11",
+      "endDate": "2019-11-15",
+      "noOfWorkingDays": "5",
+      "status": "pending",
+      "reviewManagerObject": {
+        "name": "Emeke Edike",
+        "email": "emeke.e@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 3
+    },
+    {
+      "requesterEmail": "kutjosh@gmail.com",
+      "requesterComment": "",
+      "createdDate": "Sep 19 2019",
+      "startDate": "2019-10-07",
+      "endDate": "2019-10-24",
+      "noOfWorkingDays": "14",
+      "status": "pending",
+      "reviewManagerObject": {
+        "name": "Jude Abalaka",
+        "email": "jude.a@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 4
     }
   ]
 }
