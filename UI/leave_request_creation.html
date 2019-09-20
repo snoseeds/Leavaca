@@ -10,7 +10,7 @@
 	<title>Leavaca | Admin Welcome</title>
 </head>
 
-<body class="protected accordion-page confirmation-box root-admin-and-admin portal">
+<body class="protected accordion-page confirmation-box root-admin-and-admin portal leave-request-creation">
 	<div class="container">
 		<header class="main-header portal-header">
 			<h1 id="heading">Leavaca WebApp</h1>
@@ -35,13 +35,10 @@
 		<aside id="side" class="main-sidebar">
 		  <ul>
 		  	<li>
-		  		<a class="active" href="admin_portal.html">Admin</a>
+		  		<a href="managerial_portal.html">Others Leave</a>
 		  	</li>
 		  	<li>
-		  		<a href="admin_employees_and_leave_view.html">Others Leave</a>
-		  	</li>
-		  	<li>
-		  		<a href="staff_portal.html">Your Leave</a>
+		  		<a class="active" href="staff_portal.html">Your Leave</a>
 		  	</li>
 		    <div class="more-container">
 		    		<li id="hiddenMenuButton" class="hidden-menu accordion" onclick="event.stopPropagation()"><a href="#">More</a></li>
@@ -62,29 +59,56 @@
 		    </div>
 		  </ul>
 		</aside>
-		<section id="main" class="main-body user-portal admin-portal">
+		<section id="main" class="main-body form-page-main-body">
 			<div class="menu">
 				<button id="menuB" onclick="event.stopPropagation()">&#8801</button>
 			</div>
-			<section class="portal-intro menu-item-title">
-				Today's Date
-			</section>
-			<header class="portal-intro intro">
-				Welcome
+			<header class="intro">
+				<h3>Create a leave request in few steps</h3>
 			</header>
-			<section class="admin-actions">
-				<section>
-					<h4>Admin Operations</h4>
-				</section>
-				<section class="account-creation">
-					<button data-question="Are you sure you want to create a new Employee account?" data-url="create_any_acct.html" data-url-title="Add Account" class="btn btn-default action">Create Employee Account</button>
-				</section>
-				<section class="regulate-admin-crew hide-regulate-admin-crew">
-					<button data-question="You really meant to regulate management crew?" data-url="reg_admin_crew.html" data-url-title="Continue" class="btn btn-default action">Regulate Management Crew</button>
-				</section>
+			<p class="remaining-days-reminder"></p>
+			<section class="sign-up-form sign-up"><!--
+
+        Leave Creation form
+
+    --><form class="" id="leaveCreationForm" action="leaveRequest_creation_success.html" method="post">
+
+          <fieldset class="create-account flex-label">
+            <label>
+              Comments (optional)
+              <input class="optional" type="text" id="requesterComment" placeholder="Comments for leave reason" maxlength="150">
+            </label>
+
+          	<label class="control-label">
+              Assign Review Manager
+              <select data-val-type="reviewManagerType" id="reviewManager" class="form-control">
+								<option value="0">-- Assign Review Manager --</option>
+							</select>
+            </label>
+
+			      <label class="control-label">Start date
+			        <input type="date" id="dateStart" class="optional form-control" required pattern="[0-9]{2}-[0-9]{4}-[0-9]{2}">
+						</label>
+
+			      <label class="control-label">End date
+			        <input type="date" id="dateEnd" class="optional form-control" required pattern="[0-9]{2}-[0-9]{4}-[0-9]{2}">
+						</label>
+
+			      <label class="control-label">Calculated Working Days
+			        <input disabled type="number" id="noOfWorkingDays" class="optional form-control" required placeholder="0">
+						</label>
+
+					</fieldset>
+
+					<div>
+						<button id="createLeaveRequestBtn" class="btn btn-default formActionBtn">Create your Leave Request</button>
+					</div>
+
+        </form>
 			</section>
-			<div id="transOverlay"></div>
+      <div id="transOverlay"></div>
 		</section>
+
 		<footer id="tail" class="main-footer">
 			<nav class="footer-nav">
 				<ul>
@@ -106,3 +130,4 @@
 </body>
 
 </html>
+                                    

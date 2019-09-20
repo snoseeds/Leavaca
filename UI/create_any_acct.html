@@ -117,8 +117,13 @@
               <input id="confirmPassword" data-val-type="confirmPassword" name="password" type="password" placeholder="Confirm Password" required>
             </label>
 
+            <label>
+              Allocate Annual Leave Official Days
+              <input id="leaveDays" name="leaveDays" data-val-type="leaveDays" type="number" placeholder="Allocate Leave Days" required>
+            </label>
+
             <label class="control-label">Is Employee at Management Cadre
-              <select data-val-type="managementStatus" name="managementStatus" id="managementStatus" class="form-control" required>
+              <select name="managementStatus" id="managementStatus" class="optional form-control" required>
                 <option selected="selected" value=0>No</option>
                 <option value=1>Yes</option>
               </select>

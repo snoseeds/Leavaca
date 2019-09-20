@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="assets/stylesheets/main.css">
 	<script src="assets/scripts/main.js"></script>
 	<script src="assets/scripts/app.js"></script>
-	<title>Leavaca | Staff Welcome</title>
+	<title>Leavaca | Leave Request Details</title>
 </head>
 
-<body class="protected accordion-page confirmation-box root-admin-and-admin staff-portal portal">
+<body class="protected accordion-page confirmation-box root-admin-and-admin leave-details portal">
 	<div class="container">
 		<header class="main-header portal-header">
 			<h1 id="heading">Leavaca WebApp</h1>
@@ -35,7 +35,7 @@
 		<aside id="side" class="main-sidebar">
 		  <ul>
 		  	<li>
-		  		<a href="managerial_portal.html" class="hide" id="managerPortal">Others Leave</a>
+		  		<a href="managerial_portal.html">Others Leave</a>
 		  	</li>
 		  	<li>
 		  		<a class="active" href="staff_portal.html">Your Leave</a>
@@ -67,6 +67,9 @@
 			</section>
 			<header class="portal-intro intro">
 			</header>
+			<section class="request-info balance-info">
+				<p>Kindly see details of the selected leave request below</p>
+			</section>
 			<section class="leave-requests-table accounts-table history-table">
 				<table>
           <thead>
@@ -87,21 +90,40 @@
                 End Date
               </th>              
               <th>
-                	Working Days
+                Working Days
               </th>
             </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
-				<section class="account-creation leave-request-creation">
+				<section class="leave-request-deletion leave-request-edition account-creation">
           <br>
-					<button data-question="Are you sure you want to add a new leave request?" data-url="leave_request_creation.html" data-url-title="Add Leave Request" class="btn btn-default action">Add Leave Request</button>
+					<a href="staff_portal.html" class="btn btn-default">Back to All Requests</a>
+					<button id="edit" data-question="Are you sure you want to edit this leave request?" data-url="edit_leave_request.html" data-url-title="Edit Leave Request" class="btn btn-default action hide">Edit Leave Request</button>
+					<button id="delete" data-question="Are you sure you want to delete this leave request?" data-url="staff_portal.html?deleteSelectedReq" data-url-title="Delete Leave Request" class="btn btn-default action hide">Delete Leave Request</button>
+					<button id="approve" data-question="Are you sure you want to approve this leave request?" data-url="leave_details.html?approved" data-url-title="Approve Leave Request" class="btn btn-default action hide">Approve Leave Request</button>
+					<button id="disapprove" data-question="Are you sure you want to disapprove this leave request?" data-url="leave_details.html?disapproved" data-url-title="Disapprove Leave Request" class="btn btn-default action hide">Disapprove Leave Request</button>
 				</section>
 			</section>
-			<section class="balance-info">
-				<p>Endeavor to make leave requests a week ahead of the desired start date unless for emergency cases.
-				Your approval stands an higher approval probability that way. Thanks for your understanding!</p>
+			<section class="leave-review-comment sign-up-form sign-up hide"><!--
+
+        Leave Comment form
+
+    --><form class="" id="leaveCreationForm" action="leave_details.html?commented" method="post">
+
+          <fieldset class="create-account flex-label">
+            <label>
+              Review Comments (optional)
+              <input class="optional" type="text" id="requesterComment" placeholder="Comments for leave reason" maxlength="150">
+            </label>
+					</fieldset>
+
+						<div>
+							<button id="createLeaveRequestBtn" class="btn btn-default formActionBtn">Add Review Comment</button>
+						</div>
+
+        </form>
 			</section>
 			<div id="transOverlay"></div>
 		</section>
