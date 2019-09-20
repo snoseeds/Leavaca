@@ -594,10 +594,17 @@ const start = () => {
               <p>${new Date().toDateString()}</p>`;
         };
 
-        const handleRequestsClicks = () => {
+        const handleRequestsClicks = (page) => {
           function setLeavePageQueryId () {
             window.sessionStorage.selectedLeaveId = this.textContent;
-            setLocation('leave_details');
+            if (window.sessionStorage.employeeType === 'employee') {
+              setLocation('staff_leave_details');
+            } else if () {
+              setLocation('admin_leave_details');
+
+            } else {
+              setLocation(page);
+            }
           }
           const leaveRequestElements = document.querySelectorAll('.leave-id-no p');
           leaveRequestElements.forEach(leaveIdLinkElement => {
@@ -651,7 +658,7 @@ const start = () => {
                       leaveRequestsTableBody.innerHTML += `
                         <tr class="accounts-table-row">
                           <td>
-                            Your Comments
+                            Requester Comments
                           </td>
                           <td colspan="5">
                             ${leaveRequestObject.requesterComment}
@@ -669,7 +676,7 @@ const start = () => {
                           <td>
                             Status
                           </td>
-                          <td>
+                          <td id="status">
                             ${leaveRequestObject.status}
                           </td>
                         </tr>
@@ -683,12 +690,14 @@ const start = () => {
                         </tr>`;
                     }
                   });
-                  setTimeout(handleRequestsClicks, 0);
+                  setTimeout(handleRequestsClicks.bind(null, 'leave_details'), 0);
                 } else {
                   showLeaveReqsDisplayError('You do not have any leave request');
                 }
-                if (presentPageBody.classList.contains('manager-portal')
-                  || presentPageBody.classList.contains('admin-eagle-view-portal')) {
+                if ((presentPageBody.classList.contains('manager-portal')
+                  || presentPageBody.classList.contains('admin-eagle-view-portal'))
+                  && (window.sessionStorage.employeeType !== 'manager'
+                    || localStorage.getItem('remainingLeaveDays'))) {
                   leaveRequestsTableBody.innerHTML += `
                     <td colspan="6">
                       <a id="#top" class="">Back to Top&#x25B2;</a>
@@ -700,7 +709,7 @@ const start = () => {
                         Annual Leave Days
                       </td>
                       <td>
-                        ${window.sessionStorage.leaveDays}
+                        ${localStorage.getItem('leaveDays') || window.sessionStorage.leaveDays}
                       </td>
                       <td>
                       </td>
@@ -708,7 +717,7 @@ const start = () => {
                         Remaining Leave Days
                       </td>
                       <td>
-                        ${window.sessionStorage.remainingLeaveDays}
+                        ${localStorage.getItem('remainingLeaveDays') || window.sessionStorage.remainingLeaveDays}
                       </td>
                     </tr>`;
                 }
@@ -798,6 +807,22 @@ const start = () => {
           return configuredCategory;
         };
 
+        const showTotals = (arrOfTotalsQuery) => {
+          const collectionOfTotalsNode = document.querySelectorAll('.total');
+          arrOfTotalsQuery.forEach((totalId, i) => {
+            let length = document.querySelectorAll(`#${totalId} option`).length;
+            if (length === 2) {
+              if (/([A-z0-9.-_]+)@([A-z]+)\.([A-z]){2,5}$/.test(document.querySelectorAll(`#${totalId} option`)[1].value)) {
+                collectionOfTotalsNode[i].textContent = length - 1;
+              } else {
+                collectionOfTotalsNode[i].textContent = length - 2;
+              }
+            } else {
+              collectionOfTotalsNode[i].textContent = length - 1;
+            }
+          })
+        };
+
         const renderManagerDashboard = () => {
           showDateToday();
           populateEmployeeType('form.pending #employeesThatChoseManager', 'leave', [`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=pending'], 'employee');
@@ -812,6 +837,7 @@ const start = () => {
           renderLeaveReqsTable([`reviewManagerObject.email=${window.sessionStorage.email}`, 'status=disapproved'], 'disapproved');
           const configureSearchForDisapprovedLeave = browseEmployeesAndLeave('disapproved', 'employeesThatChoseManager');
           configureSearchForDisapprovedLeave();
+          setTimeout(showTotals.bind(null, ['pending', 'approved', 'disapproved']), 0);
         };
 
         if (presentPageBody.classList.contains('manager-portal')) {
@@ -842,6 +868,7 @@ const start = () => {
           renderLeaveReqsTable(['status=disapproved'], 'disapproved');
           const configureSearchForDisapprovedLeave = browseEmployeesAndLeave('disapproved', 'disapproved');
           configureSearchForDisapprovedLeave();
+          setTimeout(showTotals.bind(null, ['all-added-users', 'pending', 'approved', 'disapproved']), 5000);
         };
 
         if (presentPageBody.classList.contains('admin-eagle-view-portal')) {
@@ -852,13 +879,121 @@ const start = () => {
           renderEmployeeDashboard();
         }
 
-        const renderLeaveDetailsPage = () => {
+        const renderLeaveDetailsPage = async () => {
           showDateToday();
+          const show = (element) => element.classList.remove('hide');
+          const editLeaveRequestBtn = document.querySelector('#edit');
+          const deleteLeaveRequestBtn = document.querySelector('#delete');
+          const approveLeaveRequestBtn = document.querySelector('#approve');
+          const disapproveLeaveRequestBtn = document.querySelector('#disapprove');
+          const leaveReviewComment = document.querySelector('.leave-review-comment');
+          if (window.sessionStorage.employeeType === 'manager') {
+            show(approveLeaveRequestBtn);
+            show(disapproveLeaveRequestBtn);
+            show(leaveReviewComment);
+            const statusElement = document.querySelector('status');
+            if (status.textContent === 'approved') {
+              approveLeaveRequestBtn.setAttribute('disabled', 'disabled');
+              if (new Date(document.querySelector('.start-date')
+                  .textContent.replace(/\s+/g, '')) - new Date()) {
+                disapproveLeaveRequestBtn.setAttribute('disabled', 'disabled')
+              }
+            }
+            const jobResultDisplaySection = document.querySelector('.request-info');
+            if (window.location.href.includes('disapproved')) {
+              const disapproveLeaveRequestAPI = `${leavacaAPIsHost}/leave/${window.sessionStorage.selectedLeaveId}`;
+              const leaveRequestObj = await (await fetch(disapproveLeaveRequestAPI)).json();
+              const { requesterEmail } = leaveRequestObj;
+              const getRequesterDetailsAPI = `${leavacaAPIsHost}/employee/?email=${requesterEmail}`;
+              const [requesterDetailsObj] = await (await fetch(getRequesterDetailsAPI)).json();
+              const { remainingLeaveDays, leaveDays } = requesterDetailsObj;
+              await fetch(disapproveLeaveRequestAPI, {
+                  method: 'PATCH',
+                  headers: {
+                    'Content-type': 'application/json',
+                  },
+                  body: JSON.stringify({status: 'disapproved'}),
+                })
+                .then(async (resp) => {
+                  if (resp.ok) {
+                    localStorage.setItem('remainingLeaveDays', remainingLeaveDays);
+                    localStorage.setItem('leaveDays', leaveDays);
+                    jobResultDisplaySection.innerHTML = `
+                      <p>Kindly see details of the disapproved leave request below and requester's remaining leave days</p>`;
+                  } else {
+                    const error = await resp.json();
+                    throw error;                      
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                  jobResultDisplaySection.innerHTML = `
+                    <p>There is an error while disapproving this leave request.
+                    Kindly try again later</p>`;
+                });
+            } else if (window.location.href.includes('approved')) {
+              const approveLeaveRequestAPI = `${leavacaAPIsHost}/leave/${window.sessionStorage.selectedLeaveId}`;
+              const leaveRequestObj = await (await fetch(approveLeaveRequestAPI)).json();
+              const { requesterEmail, noOfWorkingDays } = leaveRequestObj;
+              const getRequesterDetailsAPI = `${leavacaAPIsHost}/employee/?email=${requesterEmail}`;
+              const [requesterDetailsObj] = await (await fetch(getRequesterDetailsAPI)).json();
+              const { remainingLeaveDays, leaveDays, id } = requesterDetailsObj;
+              const updateEmployeeAPI = `${leavacaAPIsHost}/employee/${id}`;
+              if (remainingLeaveDays - noOfWorkingDays >= 0) {
+                await Promise.all([
+                  fetch(approveLeaveRequestAPI, {
+                    method: 'PATCH',
+                    headers: {
+                      'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({status: 'approved'}),
+                  }),
+                  fetch(updateEmployeeAPI, {
+                    method: 'PATCH',
+                    headers: {
+                      'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({remainingLeaveDays: remainingLeaveDays - noOfWorkingDays}),
+                  })])
+                  .then(async ([resp1, resp2]) => {
+                    if (resp1.ok && resp2.ok) {
+                      localStorage.setItem('remainingLeaveDays', remainingLeaveDays - noOfWorkingDays);
+                      localStorage.setItem('leaveDays', leaveDays);
+                      jobResultDisplaySection.innerHTML = `
+                        <p>Kindly see details of the approved leave request below and requester's remaining leave days</p>`;
+                    } else if (!resp1.ok) {
+                      const error = await resp1.json();
+                      throw error;
+                    } else {
+                      const error = await resp2.json();
+                      throw error;                      
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    jobResultDisplaySection.innerHTML = `
+                      <p>There is an error while approving this leave request.
+                      Kindly try again later</p>`;
+                  });
+              } else {
+                jobResultDisplaySection.innerHTML = `
+                  <p>The leave request can't be approved because it has more working days than remaining leave details for the employee</p>`;                
+              }
+            }
+            if (window.location.href.includes('commented')) {
+              document.querySelector('.request-info p')
+                .textContent = 'Kindly see details of the commented leave request below';
+            }
+          } else {
+            show(editLeaveRequestBtn);
+            show(deleteLeaveRequestBtn);
+          }
           if (window.location.href.includes('updated')) {
             document.querySelector('.request-info p')
               .textContent = 'Kindly see details of the updated leave request below';
           }
           renderLeaveReqsTable([`id=${window.sessionStorage.selectedLeaveId}`]);
+
         };  
 
         if (presentPageBody.classList.contains('leave-details')) {

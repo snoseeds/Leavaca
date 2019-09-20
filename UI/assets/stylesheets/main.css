@@ -905,8 +905,8 @@ button.go,
   height: 34px;
 }
 
-.accts-history-form .flex-label select {
-  margin-right: 5px;
+.view-registered-clients .all-added-users .flex-label select {
+  /*margin-right: 5px;*/
 }
 
 
@@ -915,9 +915,9 @@ button.go,
   margin-bottom: 0.5em;
 }
 
-.view-registered-clients .flex-label .search-users {
-  margin-right: 40px;
-  margin-left: -40px;
+.view-registered-clients .all-added-users  .flex-label .search-users {
+  /*margin-right: 40px;*/
+  /*margin-left: -40px;*/
 }
 
 .flex-label .search-users input {
@@ -926,12 +926,12 @@ button.go,
   position: static;
 }
 
-.view-registered-clients .flex-label .search-users-select {
+.view-registered-clients .all-added-users .flex-label .search-users-select {
   margin-top: 10px;
 }
 
 @media only screen and (max-width: 700px) {
-  .view-registered-clients .flex-label .search-users {
+  .view-registered-clients .all-added-users .flex-label .search-users {
     margin-right: 0;
     margin-left: 0;
   }

@@ -17,7 +17,7 @@
       "email": "kutjosh@gmail.com",
       "password": "orewanio",
       "leaveDays": "20",
-      "remainingLeaveDays": "20",
+      "remainingLeaveDays": 15,
       "employeeType": "employee",
       "token": "kutjoshemployeegmail.com",
       "id": 2
@@ -50,7 +50,7 @@
       "email": "nurudeen.soremekun@gmail.com",
       "password": "awaniyeno",
       "leaveDays": "20",
-      "remainingLeaveDays": "20",
+      "remainingLeaveDays": 5,
       "employeeType": "employee",
       "token": "nurudeen.soremekunemployeegmail.com",
       "id": 5
@@ -99,7 +99,7 @@
       "startDate": "2019-10-14",
       "endDate": "2019-10-18",
       "noOfWorkingDays": "5",
-      "status": "pending",
+      "status": "disapproved",
       "reviewManagerObject": {
         "name": "Emeke Edike",
         "email": "emeke.e@tranos.ng",
@@ -123,6 +123,23 @@
         "comment": "No comments yet"
       },
       "id": 6
+    },
+    {
+      "requesterName": "Joshua Kuti",
+      "requesterEmail": "kutjosh@gmail.com",
+      "requesterComment": "",
+      "createdDate": "Sep 20 2019",
+      "editedDate": "Sep 20 2019",
+      "startDate": "2019-09-23",
+      "endDate": "2019-09-27",
+      "noOfWorkingDays": "5",
+      "status": "approved",
+      "reviewManagerObject": {
+        "name": "Jude Abalaka",
+        "email": "jude.a@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 7
     }
   ]
 }

@@ -10,7 +10,7 @@
 	<title>Leavaca | Admin Eagle View</title>
 </head>
 
-<body class="protected admin-eagle-view-portal accordion-page confirmation-box root-admin-and-admin portal">
+<body class="protected admin-eagle-view-portal accordion-page confirmation-box root-admin-and-admin portal view-registered-clients">
 	<div class="container">
 		<header class="main-header portal-header">
 			<h1 id="heading">Leavaca WebApp</h1>
@@ -87,10 +87,14 @@
             <label class="search-users">
                <input type="email" id="email" name="email" placeholder="-- search by employee email --">
             </label>
-            <label class="control-label search-users-select">
+            <label class="control-label  search-all-users search-users-select">
               <select id="all-added-users" name="user" class="form-control">
                 <option value="0">-- choose employee --</option>
               </select>
+              <div>
+                <p>Total Employees Added on Leavaca</p>
+                <button data-request="admin" id="" class="btn btn-default total"></button>
+              </div>
             </label>
           </fieldset>
 
@@ -114,6 +118,10 @@
                 <select id="pending" name="user" class="form-control">
                   <option value="0">--choose employee--</option>
                 </select>
+                <div>
+                  <p>Total Pending Leave Requests on Leavaca</p>
+                  <button data-request="admin" id="" class="btn btn-default total"></button>
+                </div>
               </label>
             </fieldset>
 
@@ -184,6 +192,10 @@
                 <select id="approved" name="user" class="form-control">
                   <option value="0">--choose employee--</option>
                 </select>
+                <div>
+                  <p>Total Approved Leave Requests on Leavaca</p>
+                  <button data-request="admin" id="" class="btn btn-default total"></button>
+                </div>
               </label>
             </fieldset>
 
@@ -254,6 +266,10 @@
                 <select id="disapproved" name="user" class="form-control">
                   <option value="0">--choose employee--</option>
                 </select>
+                <div>
+                  <p>Total Disapproved Leave Requests on Leavaca</p>
+                  <button data-request="admin" id="" class="btn btn-default total"></button>
+                </div>
               </label>
             </fieldset>
 
