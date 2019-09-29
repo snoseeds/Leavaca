@@ -1,7 +1,7 @@
 const start = () => {
   const frontEndHost = window.location.href.includes('http')
     ? 'https://snoseeds.github.io/Leavaca/UI'
-    : 'file:///home/snoseeds/repos/decagon/projects/Leavaca/UI';
+    : 'file:///home/snoseeds/repos/codesmith/Leavaca/UI/';
   const leavacaAPIsHost = 'http://localhost:3000';
   document.addEventListener('DOMContentLoaded', () => {
     const presentPageBody = document.querySelector('body');
@@ -255,8 +255,10 @@ const start = () => {
             const approveLogOut = confirmationBox.querySelector('div a:first-child');
             const declineLogOut = confirmationBox.querySelector('div a:last-child');
             const configureBoxForLogout = () => {
-              memoizeUserType();
               window.sessionStorage.clear();
+              //temporarily
+              localStorage.clear();
+              memoizeUserType();
             };
             approveLogOut.addEventListener('click', configureBoxForLogout);
             declineLogOut.addEventListener('click',
@@ -599,9 +601,8 @@ const start = () => {
             window.sessionStorage.selectedLeaveId = this.textContent;
             if (window.sessionStorage.employeeType === 'employee') {
               setLocation('staff_leave_details');
-            } else if () {
+            } else if (window.sessionStorage.employeeType === 'rootAdmin') {
               setLocation('admin_leave_details');
-
             } else {
               setLocation(page);
             }
@@ -694,10 +695,10 @@ const start = () => {
                 } else {
                   showLeaveReqsDisplayError('You do not have any leave request');
                 }
-                if ((presentPageBody.classList.contains('manager-portal')
-                  || presentPageBody.classList.contains('admin-eagle-view-portal'))
-                  && (window.sessionStorage.employeeType !== 'manager'
-                    || localStorage.getItem('remainingLeaveDays'))) {
+                if ((presentPageBody.classList.contains('leave-details') !== false && (window.sessionStorage.employeeType === 'manager'
+                  && localStorage.getItem('remainingLeaveDays') === null))
+                  || presentPageBody.classList.contains('manager-portal')
+                  || presentPageBody.classList.contains('admin-eagle-view-portal')) {
                   leaveRequestsTableBody.innerHTML += `
                     <td colspan="6">
                       <a id="#top" class="">Back to Top&#x25B2;</a>
@@ -891,14 +892,7 @@ const start = () => {
             show(approveLeaveRequestBtn);
             show(disapproveLeaveRequestBtn);
             show(leaveReviewComment);
-            const statusElement = document.querySelector('status');
-            if (status.textContent === 'approved') {
-              approveLeaveRequestBtn.setAttribute('disabled', 'disabled');
-              if (new Date(document.querySelector('.start-date')
-                  .textContent.replace(/\s+/g, '')) - new Date()) {
-                disapproveLeaveRequestBtn.setAttribute('disabled', 'disabled')
-              }
-            }
+            const statusElement = document.querySelector('#status');
             const jobResultDisplaySection = document.querySelector('.request-info');
             if (window.location.href.includes('disapproved')) {
               const disapproveLeaveRequestAPI = `${leavacaAPIsHost}/leave/${window.sessionStorage.selectedLeaveId}`;
@@ -993,7 +987,18 @@ const start = () => {
               .textContent = 'Kindly see details of the updated leave request below';
           }
           renderLeaveReqsTable([`id=${window.sessionStorage.selectedLeaveId}`]);
-
+          if (window.sessionStorage.employeeType === 'manager') {
+            const statusElement = document.querySelector('#status');
+            setTimeout(() => {
+              if (statusElement.textContent === 'approved') {
+                approveLeaveRequestBtn.setAttribute('disabled', 'disabled');
+                if (new Date(document.querySelector('.start-date')
+                    .textContent.replace(/\s+/g, '')) - new Date()) {
+                  disapproveLeaveRequestBtn.setAttribute('disabled', 'disabled')
+                }
+              }
+            }, 0);
+          }
         };  
 
         if (presentPageBody.classList.contains('leave-details')) {

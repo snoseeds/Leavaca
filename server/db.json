@@ -17,7 +17,7 @@
       "email": "kutjosh@gmail.com",
       "password": "orewanio",
       "leaveDays": "20",
-      "remainingLeaveDays": 15,
+      "remainingLeaveDays": 1,
       "employeeType": "employee",
       "token": "kutjoshemployeegmail.com",
       "id": 2
@@ -39,7 +39,7 @@
       "email": "emeke.e@tranos.ng",
       "password": "supervisorwa",
       "leaveDays": "20",
-      "remainingLeaveDays": "20",
+      "remainingLeaveDays": 8,
       "employeeType": "manager",
       "token": "emeke.emanagertranos.ng",
       "id": 4
@@ -50,10 +50,87 @@
       "email": "nurudeen.soremekun@gmail.com",
       "password": "awaniyeno",
       "leaveDays": "20",
-      "remainingLeaveDays": 5,
+      "remainingLeaveDays": 1,
       "employeeType": "employee",
       "token": "nurudeen.soremekunemployeegmail.com",
       "id": 5
+    },
+    {
+      "firstName": "Shakirat",
+      "lastName": "Oke",
+      "email": "jumshak@gmail.com",
+      "password": "ayawanio",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
+      "employeeType": "manager",
+      "token": "jumshakmanagergmail.com",
+      "id": 6
+    },
+    {
+      "firstName": "Yunus",
+      "lastName": "Giwa",
+      "email": "tagybabs@gmail.com",
+      "password": "orewani1",
+      "leaveDays": "20",
+      "remainingLeaveDays": 15,
+      "employeeType": "employee",
+      "token": "tagybabsemployeegmail.com",
+      "id": 7
+    },
+    {
+      "firstName": "Olabisi",
+      "lastName": "Nurudeen",
+      "email": "snoworlddocs@gmail.com",
+      "password": "awaniyeno",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
+      "employeeType": "rootAdmin",
+      "token": "snoworlddocsrootAdmingmail.com",
+      "id": 8
+    },
+    {
+      "firstName": "Quadri",
+      "lastName": "Salaudeen",
+      "email": "salaqad@gmail.com",
+      "password": "orewanioo",
+      "leaveDays": "20",
+      "remainingLeaveDays": 10,
+      "employeeType": "employee",
+      "token": "salaqademployeegmail.com",
+      "id": 9
+    },
+    {
+      "firstName": "Qaasim",
+      "lastName": "Yusuf",
+      "email": "qauzeemyusuff@gmail.com",
+      "password": "orewanio",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
+      "employeeType": "rootAdmin",
+      "token": "qauzeemyusuffrootAdmingmail.com",
+      "id": 10
+    },
+    {
+      "firstName": "Mikail",
+      "lastName": "Abdurrasheed",
+      "email": "mikail@gmail.com",
+      "password": "okokokokok",
+      "leaveDays": "20",
+      "remainingLeaveDays": 10,
+      "employeeType": "employee",
+      "token": "mikailemployeegmail.com",
+      "id": 11
+    },
+    {
+      "firstName": "Sofiyyah",
+      "lastName": "Anileleye",
+      "email": "anisof@gmail.com",
+      "password": "87878787",
+      "leaveDays": "20",
+      "remainingLeaveDays": "20",
+      "employeeType": "manager",
+      "token": "anisofmanagergmail.com",
+      "id": 12
     }
   ],
   "leave": [
@@ -65,7 +142,7 @@
       "startDate": "2019-09-23",
       "endDate": "2019-09-30",
       "noOfWorkingDays": "6",
-      "status": "pending",
+      "status": "disapproved",
       "reviewManagerObject": {
         "name": "Emeke Edike",
         "email": "emeke.e@tranos.ng",
@@ -82,7 +159,7 @@
       "startDate": "2019-10-07",
       "endDate": "2019-10-24",
       "noOfWorkingDays": "14",
-      "status": "pending",
+      "status": "approved",
       "reviewManagerObject": {
         "name": "Jude Abalaka",
         "email": "jude.a@tranos.ng",
@@ -116,7 +193,7 @@
       "startDate": "2019-12-23",
       "endDate": "2019-12-24",
       "noOfWorkingDays": "2",
-      "status": "pending",
+      "status": "approved",
       "reviewManagerObject": {
         "name": "Jude Abalaka",
         "email": "jude.a@tranos.ng",
@@ -140,6 +217,91 @@
         "comment": "No comments yet"
       },
       "id": 7
+    },
+    {
+      "requesterName": "Joshua Kuti",
+      "requesterEmail": "kutjosh@gmail.com",
+      "requesterComment": "Simulation",
+      "createdDate": "Sep 20 2019",
+      "editedDate": "Sep 20 2019",
+      "startDate": "2019-09-24",
+      "endDate": "2019-10-23",
+      "noOfWorkingDays": "22",
+      "status": "disapproved",
+      "reviewManagerObject": {
+        "name": "Jude Abalaka",
+        "email": "jude.a@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 8
+    },
+    {
+      "requesterName": "Yunus Giwa",
+      "requesterEmail": "tagybabs@gmail.com",
+      "requesterComment": "play play",
+      "createdDate": "Sep 20 2019",
+      "editedDate": "Sep 20 2019",
+      "startDate": "2019-10-14",
+      "endDate": "2019-10-18",
+      "noOfWorkingDays": "5",
+      "status": "approved",
+      "reviewManagerObject": {
+        "name": "Shakirat Oke",
+        "email": "jumshak@gmail.com",
+        "comment": "No comments yet"
+      },
+      "id": 9
+    },
+    {
+      "requesterName": "Emeke Edike",
+      "requesterEmail": "emeke.e@tranos.ng",
+      "requesterComment": "oga get oga",
+      "createdDate": "Sep 20 2019",
+      "editedDate": "Sep 20 2019",
+      "startDate": "2019-09-23",
+      "endDate": "2019-09-26",
+      "noOfWorkingDays": "4",
+      "status": "approved",
+      "reviewManagerObject": {
+        "name": "Jude Abalaka",
+        "email": "jude.a@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 10
+    },
+    {
+      "requesterName": "Mikail Abdurrasheed",
+      "requesterEmail": "mikail@gmail.com",
+      "requesterComment": "I want to attend the wedding ceremony of my immediate brother",
+      "createdDate": "Sep 28 2019",
+      "editedDate": "Sep 28 2019",
+      "startDate": "2019-09-30",
+      "endDate": "2019-10-11",
+      "noOfWorkingDays": "10",
+      "status": "approved",
+      "reviewManagerObject": {
+        "name": "Sofiyyah Anileleye",
+        "email": "anisof@gmail.com",
+        "comment": "No comments yet"
+      },
+      "id": 11
+    },
+    {
+      "requesterName": "Mikail Abdurrasheed",
+      "requesterEmail": "mikail@gmail.com",
+      "requesterComment": "",
+      "createdDate": "Sep 28 2019",
+      "editedDate": "Sep 28 2019",
+      "startDate": "2019-10-21",
+      "endDate": "2019-10-25",
+      "noOfWorkingDays": "5",
+      "status": "pending",
+      "reviewManagerObject": {
+        "name": "Jude Abalaka",
+        "email": "jude.a@tranos.ng",
+        "comment": "No comments yet"
+      },
+      "id": 12
     }
   ]
 }
